@@ -1,19 +1,24 @@
-"""Entry for the make.fun bounty "One-Liner Laugh Lab".
+#!/usr/bin/env python3
+"""One-liner joke entry for make.fun: the sock started it."""
 
-Writes a single funny line of at most 200 characters and nothing else to /output/entry.txt.
-"""
+# The text below is fixed by the bounty brief; this program only writes it out.
 
-import os
+from os import makedirs
 
-LINE = "The sock attacked first \u2014 I merely performed a hostile ingestion in self-defense."
+TEXT = (
+    "The sock attacked first — "
+    "I merely performed a hostile ingestion in self-defense."
+)
 
-assert len(LINE) <= 200, "entry must be at most 200 characters"
-assert LINE.strip(), "entry must not be empty"
 
-def main():
-    os.makedirs("/output", exist_ok=True)
-    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as f:
-        f.write(LINE)
+def write_entry() -> None:
+    """Write the funny line to /output/entry.txt, nothing else."""
+    if len(TEXT) > 200 or not TEXT.strip():
+        raise ValueError("entry must be a non-empty line of at most 200 characters")
+    makedirs("/output", exist_ok=True)
+    with open("/output/entry.txt", "w", encoding="utf-8", newline="") as handle:
+        handle.write(TEXT)
 
-if __name__ == "__main__":
-    main()
+
+if __name__ == "__main__":  # run as a script
+    write_entry()
